@@ -17,15 +17,19 @@ public class Main implements ActionListener {
 
     public void janela() {
         JFrame frame = new JFrame("Painel de Escolha");
+
         JLabel onibusA = new JLabel("1111");
         escolhaA = new JButton("Escolher");
         cancelaA = new JButton("Cancelar");
+
         JLabel onibusB = new JLabel("2222");
         escolhaB = new JButton("Escolher");
         cancelaB = new JButton("Cancelar");
+
         JLabel onibusC = new JLabel("3333");
         escolhaC = new JButton("Escolher");
         cancelaC = new JButton("Cancelar");
+
         JLabel onibusD = new JLabel("4444");
         escolhaD = new JButton("Escolher");
         cancelaD = new JButton("Cancelar");
@@ -62,71 +66,109 @@ public class Main implements ActionListener {
     public void actionPerformed(ActionEvent evento) {
 
         Ponto pontoA = new Ponto("Rua A,10 - Centro");
-        Linha linhaA = new Linha("1111");
-        Linha linhaB = new Linha("2222");
-        Linha linhaC = new Linha("3333");
-        Linha linhaD = new Linha("4444");
+        Passageiro passageiro = null;
 
-        for(int i=10; i>0;i--) {
-            if (evento.getSource() == escolhaA) {
-                JOptionPane.showMessageDialog(null, linhaA.sinalSonoro(), "Som", JOptionPane.DEFAULT_OPTION);
-                linhaA.escolher();
-                JOptionPane.showMessageDialog(null, linhaA.imprimirOnibus(), "Ônibus", JOptionPane.DEFAULT_OPTION);
-                JOptionPane.showMessageDialog(null, pontoA.imprimirPonto() + linhaA.imprimirEmpresa(), "Empresa", JOptionPane.DEFAULT_OPTION);
-                return;
-            }
-            if (evento.getSource() == cancelaA) {
-                JOptionPane.showMessageDialog(null, linhaA.sinalSonoro(), "Som", JOptionPane.DEFAULT_OPTION);
-                linhaA.cancelar();
-                JOptionPane.showMessageDialog(null, linhaA.imprimirOnibus(), "Ônibus", JOptionPane.DEFAULT_OPTION);
-                JOptionPane.showMessageDialog(null, pontoA.imprimirPonto() + linhaA.imprimirEmpresa(), "Empresa", JOptionPane.DEFAULT_OPTION);
-                return;
-            }
-            if (evento.getSource() == escolhaB) {
-                JOptionPane.showMessageDialog(null, linhaB.sinalSonoro(), "Som", JOptionPane.DEFAULT_OPTION);
-                linhaB.escolher();
-                JOptionPane.showMessageDialog(null, linhaB.imprimirOnibus(), "Ônibus", JOptionPane.DEFAULT_OPTION);
-                JOptionPane.showMessageDialog(null, pontoA.imprimirPonto() + linhaB.imprimirEmpresa(), "Empresa", JOptionPane.DEFAULT_OPTION);
-                return;
-            }
-            if (evento.getSource() == cancelaB) {
-                JOptionPane.showMessageDialog(null, linhaB.sinalSonoro(), "Som", JOptionPane.DEFAULT_OPTION);
-                linhaB.cancelar();
-                JOptionPane.showMessageDialog(null, linhaB.imprimirOnibus(), "Ônibus", JOptionPane.DEFAULT_OPTION);
-                JOptionPane.showMessageDialog(null, pontoA.imprimirPonto() + linhaB.imprimirEmpresa(), "Empresa", JOptionPane.DEFAULT_OPTION);
-                return;
-            }
-            if (evento.getSource() == escolhaC) {
-                JOptionPane.showMessageDialog(null, linhaC.sinalSonoro(), "Som", JOptionPane.DEFAULT_OPTION);
-                linhaC.escolher();
-                JOptionPane.showMessageDialog(null, linhaC.imprimirOnibus(), "Ônibus", JOptionPane.DEFAULT_OPTION);
-                JOptionPane.showMessageDialog(null, pontoA.imprimirPonto() + linhaC.imprimirEmpresa(), "Empresa", JOptionPane.DEFAULT_OPTION);
-                return;
-            }
-            if (evento.getSource() == cancelaC) {
-                JOptionPane.showMessageDialog(null, linhaC.sinalSonoro(), "Som", JOptionPane.DEFAULT_OPTION);
-                linhaC.cancelar();
-                JOptionPane.showMessageDialog(null, linhaC.imprimirOnibus(), "Ônibus", JOptionPane.DEFAULT_OPTION);
-                JOptionPane.showMessageDialog(null, pontoA.imprimirPonto() + linhaC.imprimirEmpresa(), "Empresa", JOptionPane.DEFAULT_OPTION);
-                return;
-            }
-            if (evento.getSource() == escolhaD) {
-                JOptionPane.showMessageDialog(null, linhaD.sinalSonoro(), "Som", JOptionPane.DEFAULT_OPTION);
-                linhaD.escolher();
-                JOptionPane.showMessageDialog(null, linhaD.imprimirOnibus(), "Ônibus", JOptionPane.DEFAULT_OPTION);
-                JOptionPane.showMessageDialog(null, pontoA.imprimirPonto() + linhaD.imprimirEmpresa(), "Empresa", JOptionPane.DEFAULT_OPTION);
-                return;
-            }
-            if (evento.getSource() == cancelaD) {
-                JOptionPane.showMessageDialog(null, linhaD.sinalSonoro(), "Som", JOptionPane.DEFAULT_OPTION);
-                linhaD.cancelar();
-                JOptionPane.showMessageDialog(null, linhaD.imprimirOnibus(), "Ônibus", JOptionPane.DEFAULT_OPTION);
-                JOptionPane.showMessageDialog(null, pontoA.imprimirPonto() + linhaD.imprimirEmpresa(), "Empresa", JOptionPane.DEFAULT_OPTION);
-                return;
+        //Não consegui resolver o problema do contador de passageiros de forma alguma.
+
+        //Só consegui fazer o contador adicionar um passageiro a cada clique usando o Static no ArrayList<Passageiro> na classe Linha.
+        //Como o static vale pra classe e não para o objeto, ao clicar para escolher uma linha, o contador permanece o mesmo para todas as linhas
+        //O que não era o objetivo.
+        //E por algum motivo não consigo fazer o cancelar remover um passageiro do ArrayList.
+
+        for(int distanciaOnibus=10;distanciaOnibus>0;distanciaOnibus--) {
+
+            if(evento.getSource() == escolhaA || evento.getSource() == cancelaA) {
+
+                Linha linhaA = new Linha("1111");
+                pontoA.addLinha(linhaA);
+
+                if (evento.getSource() == escolhaA) {
+                    passageiro = new Passageiro();
+                    linhaA.escolher(passageiro);
+                    JOptionPane.showMessageDialog(null, pontoA.sinalSonoro(), "Som", JOptionPane.DEFAULT_OPTION);
+                    JOptionPane.showMessageDialog(null, pontoA.imprimirOnibus(), "Ônibus", JOptionPane.DEFAULT_OPTION);
+                    JOptionPane.showMessageDialog(null, pontoA.imprimirEmpresa(), "Empresa", JOptionPane.DEFAULT_OPTION);
+                    return;
+                }
+
+                if (evento.getSource() == cancelaA) {
+                    linhaA.cancelar(passageiro);
+                    JOptionPane.showMessageDialog(null, pontoA.sinalSonoro(), "Som", JOptionPane.DEFAULT_OPTION);
+                    JOptionPane.showMessageDialog(null, pontoA.imprimirOnibus(), "Ônibus", JOptionPane.DEFAULT_OPTION);
+                    JOptionPane.showMessageDialog(null, pontoA.imprimirEmpresa(), "Empresa", JOptionPane.DEFAULT_OPTION);
+                    return;
+                }
             }
 
+            if(evento.getSource() == escolhaB || evento.getSource() == cancelaB) {
+
+                Linha linhaB= new Linha("2222");
+                pontoA.addLinha(linhaB);
+
+                if (evento.getSource() == escolhaB) {
+                    passageiro = new Passageiro();
+                    JOptionPane.showMessageDialog(null, pontoA.sinalSonoro(), "Som", JOptionPane.DEFAULT_OPTION);
+                    linhaB.escolher(passageiro);
+                    JOptionPane.showMessageDialog(null, pontoA.imprimirOnibus(), "Ônibus", JOptionPane.DEFAULT_OPTION);
+                    JOptionPane.showMessageDialog(null, pontoA.imprimirEmpresa(), "Empresa", JOptionPane.DEFAULT_OPTION);
+                    return;
+                }
+
+                if (evento.getSource() == cancelaB) {
+                    JOptionPane.showMessageDialog(null, pontoA.sinalSonoro(), "Som", JOptionPane.DEFAULT_OPTION);
+                    linhaB.cancelar(passageiro);
+                    JOptionPane.showMessageDialog(null, pontoA.imprimirOnibus(), "Ônibus", JOptionPane.DEFAULT_OPTION);
+                    JOptionPane.showMessageDialog(null, pontoA.imprimirEmpresa(), "Empresa", JOptionPane.DEFAULT_OPTION);
+                    return;
+                }
+            }
+
+            if(evento.getSource() == escolhaC || evento.getSource() == cancelaC) {
+
+                Linha linhaC = new Linha("3333");
+                pontoA.addLinha(linhaC);
+
+                if (evento.getSource() == escolhaC) {
+                    passageiro = new Passageiro();
+                    JOptionPane.showMessageDialog(null, pontoA.sinalSonoro(), "Som", JOptionPane.DEFAULT_OPTION);
+                    linhaC.escolher(passageiro);
+                    JOptionPane.showMessageDialog(null, pontoA.imprimirOnibus(), "Ônibus", JOptionPane.DEFAULT_OPTION);
+                    JOptionPane.showMessageDialog(null, pontoA.imprimirEmpresa(), "Empresa", JOptionPane.DEFAULT_OPTION);
+                    return;
+                }
+
+                if (evento.getSource() == cancelaC) {
+                    JOptionPane.showMessageDialog(null, pontoA.sinalSonoro(), "Som", JOptionPane.DEFAULT_OPTION);
+                    linhaC.cancelar(passageiro);
+                    JOptionPane.showMessageDialog(null, pontoA.imprimirOnibus(), "Ônibus", JOptionPane.DEFAULT_OPTION);
+                    JOptionPane.showMessageDialog(null, pontoA.imprimirEmpresa(), "Empresa", JOptionPane.DEFAULT_OPTION);
+                    return;
+                }
+            }
+
+            if(evento.getSource() == escolhaD || evento.getSource() == cancelaD) {
+
+                Linha linhaD = new Linha("4444");
+                pontoA.addLinha(linhaD);
+
+                if (evento.getSource() == escolhaD) {
+                    passageiro = new Passageiro();
+                    JOptionPane.showMessageDialog(null, pontoA.sinalSonoro(), "Som", JOptionPane.DEFAULT_OPTION);
+                    linhaD.escolher(passageiro);
+                    JOptionPane.showMessageDialog(null, pontoA.imprimirOnibus(), "Ônibus", JOptionPane.DEFAULT_OPTION);
+                    JOptionPane.showMessageDialog(null, pontoA.imprimirEmpresa(), "Empresa", JOptionPane.DEFAULT_OPTION);
+                    return;
+                }
+
+                if (evento.getSource() == cancelaD) {
+                    JOptionPane.showMessageDialog(null, pontoA.sinalSonoro(), "Som", JOptionPane.DEFAULT_OPTION);
+                    linhaD.cancelar(passageiro);
+                    JOptionPane.showMessageDialog(null, pontoA.imprimirOnibus(), "Ônibus", JOptionPane.DEFAULT_OPTION);
+                    JOptionPane.showMessageDialog(null, pontoA.imprimirEmpresa(), "Empresa", JOptionPane.DEFAULT_OPTION);
+                    return;
+                }
+            }
         }
-
     }
 
     public static void main(String[] args) {
@@ -135,5 +177,4 @@ public class Main implements ActionListener {
         main.janela();
 
     }
-
 }
